@@ -8,7 +8,7 @@ Project ini masih terus dikembangkan dan akan mendapatkan peningkatan pada sisi 
 
 ## Live Demo
 
-🔗 (https://morphy-cook-official.vercel.app/)
+🔗 https://morphy-cook-official.vercel.app/
 
 ## Repositories
 
