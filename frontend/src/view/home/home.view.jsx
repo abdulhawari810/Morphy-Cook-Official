@@ -1,0 +1,163 @@
+import Header from "@/components/header.component";
+import Card from "@/components/card.component";
+import { getImagePath } from "@/utils/image.utils";
+import { useAllRecipes } from "@/hooks/recipes/useAllRecipes.hooks";
+import { useCreateFavourite } from "@/hooks/favourites/useCreateFavourite.hooks";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
+import CardLoading from "@/components/loading/card.loading";
+import Pagination from "@/components/pagination.components";
+import { useAllFavourite } from "@/hooks/favourites/useAllFavourite.hooks";
+import NoDataFound from "@/components/no_data_found.component";
+
+export default function HomeView() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [filter, setFilters] = useState({});
+  const { favourites } = useAllFavourite();
+  const [filterdebounced, setFilterDebounced] = useState({});
+  const [page, setPage] = useState(1);
+  const [LoadingSearch, setLoadingSearch] = useState(false);
+  const { recipes, loadingRecipes } = useAllRecipes({
+    query: debouncedSearchTerm,
+    category:
+      filterdebounced.category === "all" ? "" : filterdebounced.category,
+    difficulty:
+      filterdebounced.difficulty === "all" ? "" : filterdebounced.difficulty,
+    time: filterdebounced.time === "all" ? "" : filterdebounced.time,
+    page,
+  });
+  const { createFavourite, loadingFavouriteId } = useCreateFavourite();
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setLoadingSearch(false);
+      setDebouncedSearchTerm("");
+      return;
+    }
+    setLoadingSearch(true);
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (!loadingRecipes) {
+      setLoadingSearch(false);
+    }
+  }, [loadingRecipes]);
+
+  const handlefilterChange = (newFilter) => {
+    setFilters(newFilter);
+  };
+
+  const recipeList = recipes?.data;
+
+  return (
+    <div className="home-view">
+      <Header
+        onChange={(e) => setSearchTerm(e.target.value)}
+        value={searchTerm}
+        filterValue={filter}
+        onFilterChange={(newFilter) => setFilters(newFilter)}
+        loading={LoadingSearch}
+        onFilterChangeFinal={(finalFilter) => setFilterDebounced(finalFilter)}
+      />
+
+      <div className="cards-container bg-white dark:bg-neutral-900 rounded-2xl mt-5 flex flex-col p-4 gap-4">
+        {loadingRecipes ? (
+          <Skeleton className="w-64 h-6" />
+        ) : (
+          <h1 className="text-black dark:text-white font-bold text-xl md:text-2xl">
+            This Weeks Top Recipes
+          </h1>
+        )}
+
+        {/* card */}
+
+        <div
+          className={`${loadingRecipes || recipeList?.length > 0 ? "columns-2" : "flex"}
+         justify-center md:p-0 md:columns-3 lg:columns-4 items-start w-full space-y-4 md:space-y-5`}
+        >
+          {loadingRecipes && !recipeList ? (
+            Array.from({ length: 12 }).map((_, i) => {
+              return <CardLoading key={i} />;
+            })
+          ) : recipeList?.length > 0 ? (
+            recipeList?.map((item, i) => {
+              return (
+                <Card
+                  key={item.id}
+                  title={item.title}
+                  description={item.description}
+                  itemId={item.id}
+                  image={
+                    item.image ||
+                    getImagePath(`food/item.image`) ||
+                    getImagePath("food/food1.jpg")
+                  }
+                  profile={item.recipe?.profile}
+                  author={item.recipe?.username}
+                  difficulty={item.difficulty}
+                  time={item.time}
+                  onFavouriteSaved={favourites}
+                  category={item.category?.name}
+                  onCardClick={() => nav(`/recipes/detail/${item.id}`)}
+                  onFavouriteClick={(e) => {
+                    e.stopPropagation();
+                    createFavourite(item.id);
+                  }}
+                  onLoadingFavourite={loadingFavouriteId === item.id}
+                />
+              );
+            })
+          ) : debouncedSearchTerm ? (
+            <NoDataFound
+              type={"search"}
+              error={`Resep ${debouncedSearchTerm} tidak ditemukan`}
+            />
+          ) : (
+            <NoDataFound error={`Tidak Ada Data Ditemukan`} />
+          )}
+        </div>
+
+        {/* Pagination */}
+        {recipes.totalPage > 1 && (
+          <Pagination
+            btnPrev={recipes.currentPage <= 1}
+            btnNext={recipes.currentPage >= recipes.totalPage}
+            onClickBtnNext={() => {
+              if (recipes.currentPage >= recipes.totalPage) return;
+              setPage(recipes.currentPage + 1);
+            }}
+            onClickBtnPrev={() => {
+              if (recipes.currentPage <= 1) return;
+              setPage(recipes.currentPage - 1);
+            }}
+            setPage={setPage}
+          >
+            {Array.from({ length: recipes.totalPage }, (_, i) => i + 1).map(
+              (p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`px-3 py-1 rounded ${
+                    page === p
+                      ? "bg-black text-white dark:bg-orange-500 dark:text-black"
+                      : "border"
+                  }`}
+                >
+                  {p}
+                </button>
+              ),
+            )}
+          </Pagination>
+        )}
+      </div>
+    </div>
+  );
+}
