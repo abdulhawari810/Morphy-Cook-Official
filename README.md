@@ -10,6 +10,20 @@ Project ini masih terus dikembangkan dan akan mendapatkan peningkatan pada sisi 
 
 🔗 https://mco-recipe-frontend.vercel.app/
 
+## Repositories
+
+### Frontend
+
+Frontend source code:
+
+https://github.com/abdulhawari810/mco-recipe-frontend
+
+### Backend
+
+Backend source code:
+
+https://github.com/abdulhawari810/mco-recipe-backend
+
 ## Screenshots
 
 ### Home Page
@@ -110,20 +124,6 @@ mco-recipe
 ├── frontend/
 └── backend/
 ```
-
-## Repositories
-
-### Frontend
-
-Frontend source code:
-
-https://github.com/abdulhawari810/mco-recipe-frontend
-
-### Backend
-
-Backend source code:
-
-https://github.com/abdulhawari810/mco-recipe-backend
 
 ## Learning Outcomes
 
