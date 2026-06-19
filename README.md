@@ -14,19 +14,36 @@ Project ini masih terus dikembangkan dan akan mendapatkan peningkatan pada sisi 
 
 ### Home Page
 
-(Add Screenshot Here)
+<img width="1280" height="608" alt="image" src="https://github.com/user-attachments/assets/12ed0167-774b-42e9-9580-fa6a1633a670" />
+
 
 ### Recipe Detail
 
-(Add Screenshot Here)
+<img width="1280" height="597" alt="image" src="https://github.com/user-attachments/assets/1d84affc-a9b3-4754-8f69-1e162ad0cb25" />
+
 
 ### Profile Settings
 
-(Add Screenshot Here)
+<img width="1280" height="610" alt="image" src="https://github.com/user-attachments/assets/ce8b96ae-67d8-4c96-84fd-c7e0a41f3f1e" />
+
 
 ### Chef Dashboard
 
-(Add Screenshot Here)
+<img width="1280" height="606" alt="image" src="https://github.com/user-attachments/assets/7e76dc0e-c1b4-4ed1-a4dd-bcf785ef29a9" />
+
+### Chef Manajemen Recipe
+
+<img width="1280" height="602" alt="image" src="https://github.com/user-attachments/assets/5c5cea30-bdf8-4bc3-a8cb-52f10904a0c8" />
+
+
+### Admin Dashboard
+
+<img width="1280" height="596" alt="image" src="https://github.com/user-attachments/assets/76c113ca-10dd-4b07-a4da-c35a4786acb5" />
+
+### Admin Manajemen Users
+
+<img width="1280" height="600" alt="image" src="https://github.com/user-attachments/assets/98314873-c48d-43c8-b141-8d79c6b7475a" />
+
 
 ## Main Features
 
