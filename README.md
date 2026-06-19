@@ -8,7 +8,7 @@ Project ini masih terus dikembangkan dan akan mendapatkan peningkatan pada sisi 
 
 ## Live Demo
 
-🔗 https://mco-recipe-frontend.vercel.app/
+🔗 (https://morphy-cook-official.vercel.app/)
 
 ## Repositories
 
